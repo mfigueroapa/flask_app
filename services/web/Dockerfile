@@ -16,6 +16,12 @@ ENV PYTHONUNBUFFERED 1
 # -u Force the stdout and stderr streams to be unbuffered. This option has no effect on the stdin stream.
 
 
+# install system dependencies
+RUN apt-get update && apt-get install -y netcat
+# Netcat functions as a back-end tool that allows for port scanning and port listening.
+# In addition, you can actually transfer files directly through Netcat or use it 
+# as a backdoor into other networked systems
+
 # install dependencies
 RUN pip install --upgrade pip
 COPY ./requirements.txt /usr/src/app/requirements.txt
@@ -23,3 +29,6 @@ RUN pip install -r requirements.txt
 
 # copy project
 COPY . /usr/src/app/
+
+# run entrypoint.sh
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
